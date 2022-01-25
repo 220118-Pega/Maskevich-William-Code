@@ -1,0 +1,18 @@
+<configuration status="INFO">
+	# Config status is useful for
+	<Appenders>
+		#
+	
+	#Console Appender
+		<Console name="stdout" target="SYTEM_OUT">
+			<PatternLayout pattern="%d{YYYY-MM-dd HH:mm:ss) %p %m %n"/>
+			#
+			#
+				#
+		</Console>
+
+
+	</Appenders>
+
+
+</configuration>

@@ -1,18 +1,30 @@
 <configuration status="INFO">
-	# Config status is useful for
-	<Appenders>
-		#
-	
-	#Console Appender
-		<Console name="stdout" target="SYTEM_OUT">
-			<PatternLayout pattern="%d{YYYY-MM-dd HH:mm:ss) %p %m %n"/>
-			#
-			#
-				#
-		</Console>
-
-
-	</Appenders>
-
-
+	# CONFIG status is useful for troubleshooting configuration issues
+<Appenders>
+		# Appenders are places you will be logging to
+	#Console Appender (a basic one)
+	<Console name="stdout" target="SYTEM_OUT">
+			# we will refer to this by name,
+		<PatternLayout pattern="%d{YYYY-MM-dd HH:mm:ss) %p %m %n" />
+			# ie, how we want the log to appear; 
+			# %d provides the date pattern 
+			# %p specifies log level
+			# %m is the accompanying message
+			#%n is just a carriage return after the message.
+	</Console>
+	<file name="fout"  filename="logs/runtime.log" append="true">
+		#agin, name is so we have a reference, we dfeine a file and path,
+		#and we want to append to the log file rather than write over prior logs
+		<PatternLayout pattern="%d{YYYY-MM-dd HH:mm:ss) %p %m %n" />
+	</file>
+</Appenders>
+	# we have to let log4j2 know that we are logging to the console
+	# so we have register that as a logger
+<Loggers>	# loggers is where you declare where you will log to
+	<root level = "error">
+		# and now register
+		<AppenderRef ref="stdout" /> 
+		<AppenderRef ref="fout" />
+	</root>	
+</Loggers>
 </configuration>

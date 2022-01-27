@@ -3,6 +3,9 @@ package com.revature.projectreimbursement.ui;
 import java.time.LocalDateTime;
 import java.util.Scanner;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.revature.projectreimbursement.bl.ITicketBL;
 import com.revature.projectreimbursement.bl.TicketBL;
 import com.revature.projectreimbursement.models.Ticket;
@@ -12,7 +15,8 @@ import com.revature.projectreimbursement.ui.MainMenu.Type;
 public class MainMenu {
 	// We will instantiate a Scanner to obtain input and to display a menu!
 	private Scanner myscanner;
-	private TicketBL ticketBL;;
+	private TicketBL ticketBL;
+	private final Logger logger = LogManager.getLogger(this.getClass());
 
 	public enum Status {
 		PENDING, APPROVED, REJECTED;

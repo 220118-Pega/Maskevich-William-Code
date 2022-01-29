@@ -5,57 +5,78 @@ package com.revature.projectreimbursement.models;
  * @author MyCompWF
  *
  */
-public abstract class Employees {
+public  class Employees {
 	
-	protected String fName;
-	protected String lName;
-	protected int employeeId;
+	private int id;
+	private int employeeId;
+	private String fName;
+	private String lName;
+	private int mgr_assigned;
+
 	
+	public Employees() {
+	}
 	
-	public Employees(String fName, String lName, int employeeId) {
-		
-		this.fName = fName;
-		this.lName = lName;
+	public Employees( int employeeId, String fName) {
 		this.employeeId = employeeId;
-		
-	}
-
-
-	public String getfName() {
-		return fName;
-	}
-
-
-	public void setfName(String fName) {
 		this.fName = fName;
 	}
-
-
-	public String getlName() {
-		return lName;
-	}
-
-
-	public void setlName(String lName) {
+	
+	public Employees( int employeeId, String fName, String lName) {
+		this(employeeId, fName); 
 		this.lName = lName;
 	}
 
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 
 	public int getEmployeeId() {
 		return employeeId;
 	}
 
-
 	public void setEmployeeId(int employeeId) {
 		this.employeeId = employeeId;
 	}
 
+	public String getfName() {
+		return fName;
+	}
+
+	public void setfName(String fName) {
+		this.fName = fName;
+	}
+
+	public String getlName() {
+		return lName;
+	}
+
+	public void setlName(String lName) {
+		this.lName = lName;
+	}
+
+	public int getMgr_assigned() {
+		return mgr_assigned;
+	}
+
+	public void setMgr_assigned(int mgr_assigned) {
+		this.mgr_assigned = mgr_assigned;
+	}
 
 	@Override
 	public String toString() {
-		return "Employees [fName=" + fName + ", lName=" + lName + ", employeeId=" + employeeId + "]";
+		return "Employees [id=" + id + ", employeeId=" + employeeId + ", fName=" + fName + ", lName=" + lName
+				+ ", mgr_assigned=" + mgr_assigned + "]";
 	}
 	
+	
+
+
+
 	
 	
 	

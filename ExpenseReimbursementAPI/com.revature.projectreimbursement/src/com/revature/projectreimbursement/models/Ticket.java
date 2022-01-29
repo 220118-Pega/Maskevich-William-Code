@@ -1,5 +1,6 @@
 package com.revature.projectreimbursement.models;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -8,17 +9,19 @@ import com.revature.projectreimbursement.ui.MainMenu.Status;
 import com.revature.projectreimbursement.ui.MainMenu.Type;
 
 public class Ticket {
-	
+	//rearrange to meet db table layout merely for convenience
 	private int id; //this is the ticket ID
-	private String fName;
-	private String lName;
 	private int employeeId;
 	private String title;
 	private Type type;
-	private Status status;
-	private long amount;
+	private double amount;
 	private String description;
-	private LocalDateTime myTimeStamp;
+	//there is time stamp when ticket is created
+	private LocalDate ticketTimeStamp;
+	private Status status;
+	// and there is time stamp when status is updated
+	private LocalDate statusTimeStamp;		
+
 
 	/*
 	 * In the getters/ setters:
@@ -33,32 +36,25 @@ public class Ticket {
 	*/
 	public Ticket() { }
 	
-	public Ticket(String fName, String lName, int employeeId, String title, Type type, Status status, 
-			long amount, String description ) {
+	public Ticket(int employeeId,String title,Type type,double amount,String description,
+			LocalDate ticketTimeStamp,Status status){
 
-		this.fName = fName;
-		this.lName = lName;
 		this.employeeId = employeeId;
 		this.title = title;
 		this.type = type;
-		this.status = status;
 		this.amount = amount;
 		this.description = description;
-
+		this.status = status;
+		this.ticketTimeStamp = ticketTimeStamp;
 	}
 	
-	
-	public Ticket(int id, String fName, String lName, int employeeId, String title, Type type, Status status, 
-			long amount, String description, LocalDateTime myTimeStamp  ) {
+	public Ticket(int id, int employeeId, String title, Type type, double amount, String description, 
+			LocalDate ticketTimeStamp, Status status, LocalDate statusTimeStamp) {
 		
-		this(fName, lName, employeeId, title, type, status, amount, description);
-		
+		this(employeeId,title,type,amount,description,ticketTimeStamp, status);
 		this.id = id;
-		this.myTimeStamp = myTimeStamp;
-
-			
+		this.statusTimeStamp = statusTimeStamp;
 	}
-	
 //Getters and Setters
 	public int getId() {
 		return id;
@@ -66,22 +62,6 @@ public class Ticket {
 
 	public void setId(int id) {
 		this.id = id;
-	}
-
-	public String getfName() {
-		return fName;
-	}
-
-	public void setfName(String fName) {
-		this.fName = fName;
-	}
-
-	public String getlName() {
-		return lName;
-	}
-
-	public void setlName(String lName) {
-		this.lName = "Smith";
 	}
 
 	public int getEmployeeId() {
@@ -108,19 +88,11 @@ public class Ticket {
 		this.type = type;
 	}
 
-	public Status getStatus() {
-		return status;
-	}
-
-	public void setStatus(Status status) {
-		this.status = status;
-	}
-
-	public long getAmount() {
+	public double getAmount() {
 		return amount;
 	}
 
-	public void setAmount(long amount) {
+	public void setAmount(double amount) {
 		this.amount = amount;
 	}
 
@@ -132,21 +104,37 @@ public class Ticket {
 		this.description = description;
 	}
 
-	public LocalDateTime getMyTimeStamp() {
-		return myTimeStamp;
+	public LocalDate getTicketTimeStamp() {
+		return ticketTimeStamp;
 	}
 
-	public void setMyTimeStamp(LocalDateTime myTimeStamp) {
-		this.myTimeStamp = myTimeStamp;
+	public void setTicketTimeStamp(LocalDate ticketTimeStamp) {
+		this.ticketTimeStamp = ticketTimeStamp;
 	}
 
+	public Status getStatus() {
+		return status;
+	}
+
+	public void setStatus(Status status) {
+		this.status = status;
+	}
+
+	public LocalDate getStatusTimeStamp() {
+		return statusTimeStamp;
+	}
+
+	public void setStatusTimeStamp(LocalDate statusTimeStamp) {
+		this.statusTimeStamp = statusTimeStamp;
+	}
+	
+	//tostring format
 	@Override
 	public String toString() {
-		return "Ticket [id=" + id + ", fName=" + fName + ", lName=" + lName + ", employeeId=" + employeeId + ", title="
-				+ title + ", type=" + type + ", status=" + status + ", amount=" + amount + ", description="
-				+ description + ", myTimeStamp=" + myTimeStamp + "]";
+		return "Ticket [id=" + id + ", employeeId=" + employeeId + ", title=" + title + ", type=" + type + ", amount="
+				+ amount + ", description=" + description + ", ticketTimeStamp=" + ticketTimeStamp + ", status="
+				+ status + ", statusTimeStamp=" + statusTimeStamp + "]";
 	}
-
-
 	
+// end of class	
 }

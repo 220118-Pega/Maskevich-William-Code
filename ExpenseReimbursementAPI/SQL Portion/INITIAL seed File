@@ -1,0 +1,31 @@
+-- INITIAL Seed File for creating and seeding my project P0 database
+--This one uses existing JAVA ticket model - will modify once program interacts w/ this DB
+--THE TABLES
+--Employees Table ---need to correct this, an employye should have an assigned manager (m:1) not vice-versa (1:M)
+Create Table tickets (
+	id	serial Primary Key, --probably want this even though wont create employess in Java code.
+	employeeId	int		not null,
+	first_name	TEXT	 exclusive not Null,
+	last_name	TEXT	exclusive not null,  --have this to try out exclusion but need SQL logic
+	title_ticket	text,
+	type_reimbursement	VARCHAR(8) not null,
+	amount_reimbursement	decimal(6,2) not null,
+	description_ticket	text,
+	status_ticket		VARCHAR(8) not null,
+	ticket_timestamp	date
+;
+
+
+	
+--THE DATA  --I think I will seed the table from Java (well eventually)
+--Employees Table
+INSERT INTO tickets (employeeId, first_name, last_name, title_ticket, type_reimbursement, amount_reimbursement,
+					 description_ticket, status_ticket  ) 
+	VALUES
+	(1, 'William', 'Maskevich', 'My ticket title', 'FOOD', 123, 'lunch, dinner, tip', 'PENDING'),
+	(2, 'John', 'Smith', 'My ticket title too', 'OTHER', 27.88, 'laundry and dry cleaning', 'PENDING'),
+	(3, 'Jane', 'Doe', 'Relocation', 'LODGING', 78, 'hotel', 'PENDING'),
+	(4, 'Ann', 'Wilson', 'Customer Emergency', 'TRAVEL', 12321, 'The airplane broke down so I rented a limousine', 'PENDING')
+;
+	
+

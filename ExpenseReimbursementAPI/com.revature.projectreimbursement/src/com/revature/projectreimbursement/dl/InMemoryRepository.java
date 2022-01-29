@@ -1,5 +1,6 @@
 package com.revature.projectreimbursement.dl;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -33,7 +34,9 @@ public class InMemoryRepository implements IRepository{
 		Type sampleType = Type.OTHER;
 		Status sampleStatus = Status.PENDING;
 		
-		listOfTickets = new ArrayList<Ticket>() {{
+		//add for no initialization
+		latestId = 0;
+		listOfTickets = new ArrayList<Ticket>();/* {{
 			add(new Ticket(0, "William", "Me", 0, "Sample Title1A", sampleType, sampleStatus, 123, "Sample description 1A", null));
 			add(new Ticket(1, "Bill", "Me", 0, "Sample Title1B", sampleType, sampleStatus, 456, "Sample description 1B", null));
 			add(new Ticket(2, "Billy", "Me", 0, "Sample Title1C", sampleType, sampleStatus, 789, "Sample description 1C", null));
@@ -41,7 +44,7 @@ public class InMemoryRepository implements IRepository{
 			add(new Ticket(4, "Willy", "Me", 2, "Sample Title3", sampleType, sampleStatus, 787, "Sample description 3", null));
 		}};
 		latestId = 5;
-		
+		*/
 	}
 
 	//Methods: to add a ticket to and to view the list of tickets
@@ -60,6 +63,7 @@ public class InMemoryRepository implements IRepository{
 		for(Ticket ticket : getTickets()) {
 			if(idToUpdate == ticket.getId()) {
 				ticket.setStatus(newStatus);
+				ticket.setStatusTimeStamp(LocalDate.now());
 			}
 		}
 	}

@@ -3,7 +3,7 @@
 <Appenders>
 		# Appenders are places you will be logging to
 	#Console Appender (a basic one)
-	<Console name="stdout" target="SYTEM_OUT">
+	<Console name="stdout" target="SYSTEM_OUT">
 			# we will refer to this by name,
 		<PatternLayout pattern="%d{YYYY-MM-dd HH:mm:ss) %p %m %n" />
 			# ie, how we want the log to appear; 

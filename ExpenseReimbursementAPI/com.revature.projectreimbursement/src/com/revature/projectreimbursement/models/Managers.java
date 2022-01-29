@@ -6,35 +6,56 @@ package com.revature.projectreimbursement.models;
  * @author MyCompWF
  *
  */
-public class Managers extends Employees{
+public class Managers {
 
+	private int id;	
+	private int mgr_id;	
+	private String department;
 	
-	
-	private boolean mgrYesOrNo;
-	
-	public Managers(String fName, String lName, int employeeId) {
-		super(fName, lName, employeeId);
+	public Managers() {
 		
 	}
 	
-	public Managers(String fName, String lName, int employeeId, boolean mgrYesOrNo) {
-		super(fName, lName, employeeId);
-		this.mgrYesOrNo = mgrYesOrNo;
+	public Managers(int mgr_id, String department) {
 		
+		this.mgr_id = mgr_id;
+		this.department = department;
 	}
 	
-	public boolean isMgrYesOrNo() {
-		return mgrYesOrNo;
+	public Managers( int id, int mgr_id, String department) {
+		
+		this(mgr_id, department);
+		this.id = id;
 	}
 
-	public void setMgrYesOrNo(boolean mgrYesOrNo) {
-		this.mgrYesOrNo = mgrYesOrNo;
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public int getMgr_id() {
+		return mgr_id;
+	}
+
+	public void setMgr_id(int mgr_id) {
+		this.mgr_id = mgr_id;
+	}
+
+	public String getDepartment() {
+		return department;
+	}
+
+	public void setDepartment(String department) {
+		this.department = department;
 	}
 
 	@Override
 	public String toString() {
-		return "Managers [fName=" + fName + ", lName=" + lName + ", employeeId=" + employeeId + ", mgrYesOrNo="
-				+ mgrYesOrNo + "]";
+		return "Managers [id=" + id + ", mgr_id=" + mgr_id + ", department=" + department + "]";
 	}
 	
+
 }

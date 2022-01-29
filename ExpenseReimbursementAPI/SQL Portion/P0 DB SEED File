@@ -1,53 +1,57 @@
 -- Seed File for creating and seeding my project P0 database
 --THE TABLES
---Employees Table
-Create Table employees (
-	id	serial Primary Key,
-	employeeId	int	
-	first_name	TEXT	 exclusive not Null,
-	last_name	TEXT	exclusive not null,
-);
 --Managers Table
+Drop Table managers;
 Create Table managers (
-	id	serial Primary Key,
-	employeeId	int references employees(id)
-	department	TEXT	 not Null,
+	id	SERIAL Primary Key, --I'm not going to create managers in Reimbursements
+	mgr_id	int	unique not null,  -- i take it back, this should be assined by policy, not next number available
+	--employee_id	int references employees(id), --this is deleted, employees.employee_id will point to mgr_id
+	department	TEXT not null);
+
+--Employees Table ---need to correct this, an employye should have an assigned manager (m:1) not vice-versa (1:M)
+Create Table employees (
+	id	SERIAL Primary Key, --probably want this even though wont create employess in Java code.
+	employee_id	int	 unique	not null,
+	first_name	TEXT,
+	last_name	TEXT, --have this to try out exclusion but need SQL logic NATA
+	mgr_assigned  int references managers(mgr_id)
 );
+
 --Tickets Table
 Create Table tickets (
-	id	serial Primary Key,
-	ticket_id
-	title_ticket	
-	type_reimbursement	
-	amount_reimbursement	
-	description_ticket	
-	my_time_stamp	
+	ticket_id serial Primary Key, --I am creating tickets in Reimburse(Java), thus can serialize ticket_id
+	employee_Id int references employees(employee_id),
+	title_ticket	text,
+	type_reimbursement	VARCHAR(8) not null,
+	amount_reimbursement	decimal(6,2) not null,	
+	description_ticket	text,
+	ticket_timestamp	date not null default current_date,		-- format: yyyy-mm-dd   
+	status_ticket		VARCHAR(8) not null,
+	status_timestamp	date
 );
---Status of Ticket Table
-Create Table status_ticket (
-	id	serial Primary Key,
-	status_ticket	
-	my_time_stamp
-);
---THE DATA
---Employees Table
-INSERT INTO status_ticket (employeeId, first_name, last_name) 
-	VALUES
 	
-	;
+--THE DATA  --I think I will seed the table from Java (well eventually)
 --Managers Table
-INSERT INTO managers (employeeId, department ) 
+INSERT INTO managers (mgr_id, department ) 
 	VALUES
-	
+	(99,'Finance')
 	;
---status of Tickets Table
-INSERT INTO tickets (title_ticket, type_reimbursement, amount_reimbursement	, description_ticket) 
+--Employees Table
+INSERT INTO employees (employee_id, first_name, last_name, mgr_assigned) 
 	VALUES
-	
+	(1, 'William', 'Maskevich' ,99   ),	(2, 'John', 'Smith',99 ), (3, 'Jane', 'Doe',99 ),
+	(4, 'Ann', 'Wilson',99 ), (5, 'Nancy', 'Wilson',99 ), (6, 'Led', 'Zepellin',99 ),
+	(7, 'Walter', 'Cronkite',99 )
 	;
---status of Tickets Table
-INSERT INTO status_ticket (	status_ticket,  my_time_stamp) 
+--Tickets Table
+INSERT INTO tickets (title_ticket, type_reimbursement, amount_reimbursement, description_ticket, status_ticket)
 	VALUES
-	
+	('My ticket title', 'FOOD', 123, 'lunch, dinner, tip', 'PENDING'),
+	('My ticket title too', 'OTHER', 27.88, 'laundry and dry cleaning', 'PENDING'),
+	('Relocation', 'LODGING', 78, 'hotel', 'PENDING'),
+	('Customer Emergency', 'TRAVEL', 123, 'The airplane broke down so I rented a limousine', 'PENDING')
 	;
 
+select * from employees;
+select * from managers;
+select * from tickets;

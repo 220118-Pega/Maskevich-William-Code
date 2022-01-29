@@ -13,7 +13,7 @@ public interface ITicketBL {
 	//I have to be able to add a new ticket to the existing list of tickets
 	void	addTicket(Ticket ticket);
 	
-	//I have to be able to get the list of tickets (in order to add to that list
+	//I have to be able to get the list of tickets
 	List<Ticket> getTickets();
 	
 	int numberOfTickets();

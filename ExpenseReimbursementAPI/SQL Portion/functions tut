@@ -1,0 +1,82 @@
+--Creating a function:
+--Step One:  create [or replace] function function_name(param_list) //A function can have zero or many parameters.
+--				returns datatype_of_returned_value
+--				language plpgsql //  needed to specify the procedural language of the function)
+--				as
+--			$$ //Finally, place a block in the dollar-quoted string constant.
+--				
+--			declare 
+-- 					variable declaration
+--			begin
+-- 					logic
+--			end;
+--			$$
+
+/* A sample function based on my P0
+Create Function get_number_of_employees() RETURNS INT language plpgsql
+	as
+$$
+DECLARE
+	employee_count integer;
+BEGIN
+	SELECT Count(id)
+	into employee_count
+	FROM employees;
+
+RETURN employee_count;
+END;
+$$
+
+select get_number_of_employees();
+*/
+/*an example making use of a parameter list:
+create function get_film_count(len_from int, len_to int) returns int language plpgsql
+	as
+$$
+declare
+   film_count integer;
+begin
+   select count(*) 
+   into film_count
+   from film
+   where length between len_from and len_to;
+   
+return film_count;
+end;
+$$;
+
+select get_film_count(1, 10    );
+*/
+/*
+--More complex example -- check if copy is in stock
+CREATE FUNCTION inventory_in_stock(@inventory_id INT) RETURNS tinyint
+BEGIN
+    DECLARE @rentals INT;
+    DECLARE @out INT;
+
+    -- AN ITEM IS IN-STOCK IF THERE ARE EITHER NO ROWS IN THE rental TABLE
+    -- FOR THE ITEM OR ALL ROWS HAVE return_date POPULATED
+
+	--Returns 1 or 0
+	--1 = Yes, the item is in Stock
+	--0 = no, the item is not in stock
+
+    SELECT @rentals = COUNT(*)
+    FROM rental
+    WHERE inventory_id = @inventory_id;
+
+    IF @rentals = 0
+        RETURN 1;    --If rentals table doesn't have the item, we know it's instock, return true.
+
+    SELECT @out = COUNT(*)
+    FROM inventory as i
+    LEFT JOIN rental as r ON r.inventory_id = i.inventory_id
+    WHERE i.inventory_id = @inventory_id
+    AND r.return_date IS NULL;
+
+    RETURN CASE WHEN @out > 0 THEN 0  --If rental table has item with no return date, it's out.
+                ELSE 1
+           END
+END
+*/
+

@@ -1,12 +1,16 @@
 package com.revature.projectreimbursement.models;
 
+
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import com.revature.projectreimbursement.ui.MainMenu.Status;
-import com.revature.projectreimbursement.ui.MainMenu.Type;
+import com.revature.projectreimbursement.ui.InputClass.Status;
+import com.revature.projectreimbursement.ui.InputClass.Type;
+
+
 
 public class Ticket {
 	//rearrange to meet db table layout merely for convenience
@@ -34,28 +38,31 @@ public class Ticket {
 	 * program automatically set lName to Smith; but for project its not really  needed at this stage
 
 	*/
-	public Ticket() { }
+	public Ticket() {
+		
+	}
 	
 	public Ticket(int employeeId,String title,Type type,double amount,String description,
-			LocalDate ticketTimeStamp,Status status){
+			LocalDate ticketTimeStamp, Status status){
 
 		this.employeeId = employeeId;
 		this.title = title;
 		this.type = type;
 		this.amount = amount;
 		this.description = description;
-		this.status = status;
 		this.ticketTimeStamp = ticketTimeStamp;
+		this.status = status;
 	}
 	
 	public Ticket(int id, int employeeId, String title, Type type, double amount, String description, 
 			LocalDate ticketTimeStamp, Status status, LocalDate statusTimeStamp) {
 		
-		this(employeeId,title,type,amount,description,ticketTimeStamp, status);
+		this(employeeId, title,type, amount,description,ticketTimeStamp, status);
 		this.id = id;
 		this.statusTimeStamp = statusTimeStamp;
 	}
 //Getters and Setters
+
 	public int getId() {
 		return id;
 	}
@@ -127,14 +134,19 @@ public class Ticket {
 	public void setStatusTimeStamp(LocalDate statusTimeStamp) {
 		this.statusTimeStamp = statusTimeStamp;
 	}
-	
-	//tostring format
+
 	@Override
 	public String toString() {
 		return "Ticket [id=" + id + ", employeeId=" + employeeId + ", title=" + title + ", type=" + type + ", amount="
 				+ amount + ", description=" + description + ", ticketTimeStamp=" + ticketTimeStamp + ", status="
 				+ status + ", statusTimeStamp=" + statusTimeStamp + "]";
 	}
+	
+	
+
+
+	
+
 	
 // end of class	
 }

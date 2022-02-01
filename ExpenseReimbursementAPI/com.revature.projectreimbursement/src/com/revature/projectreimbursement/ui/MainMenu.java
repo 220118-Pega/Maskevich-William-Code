@@ -2,6 +2,7 @@ package com.revature.projectreimbursement.ui;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -11,22 +12,17 @@ import org.apache.logging.log4j.Logger;
 import com.revature.projectreimbursement.bl.ITicketBL;
 import com.revature.projectreimbursement.bl.TicketBL;
 import com.revature.projectreimbursement.models.Ticket;
-import com.revature.projectreimbursement.ui.MainMenu.Status;
-import com.revature.projectreimbursement.ui.MainMenu.Type;
+import com.revature.projectreimbursement.ui.InputClass.Status;
+import com.revature.projectreimbursement.ui.InputClass.Type;
+
 
 public class MainMenu {
 	// We will instantiate a Scanner to obtain input and to display a menu!
 	private Scanner myscanner;
-	private TicketBL ticketBL;
+	private ITicketBL ticketBL;
 	private final Logger logger = LogManager.getLogger(this.getClass());
+	Date date = new Date(); 
 
-	public enum Status {
-		PENDING, APPROVED, REJECTED;
-	}
-
-	public enum Type {
-		LODGING, TRAVEL, FOOD, OTHER;
-	}
 
 	public MainMenu(Scanner myscanner, TicketBL ticketBL) {
 		this.myscanner = myscanner;
@@ -51,6 +47,8 @@ public class MainMenu {
 			case "0":
 				System.out.println("Creating a new ticket.");
 				createTicket();
+				logger.info("Created a Ticket");
+				logger.error("Created a ticket");
 				break;
 			case "1":
 				System.out.println("Getting the list of all tickets.");
@@ -79,10 +77,6 @@ public class MainMenu {
 
 	private void createTicket() {
 		// create a ticket
-		System.out.println("Enter your first name:");
-		String fName = myscanner.nextLine();
-		System.out.println("Enter your last name:");
-		String lName = myscanner.nextLine();
 		System.out.println("Enter your employee ID:");
 		System.out.println("Your Id is a number between 1 and 10");
 		int employeeId = InputClass.getInputInt("Please enter your employee ID");
@@ -149,6 +143,11 @@ public class MainMenu {
 
 	private void getTickets() {
 		// so Ive sought and obtained the list of tickets
+		// this numberOfTickets works with in memory
+		//it could work in DB if I add a count aggregate function
+		//I could do that, but it might be more efficient to modify
+		//the method here so that a coount of tickets is not needed.
+/*		
 		int anyIds = ticketBL.numberOfTickets();
 		if (anyIds > 0) {
 			for (Ticket ticket : ticketBL.getTickets())
@@ -156,24 +155,31 @@ public class MainMenu {
 		} else {
 			System.out.println("There are no tickets");
 		}
+*/
+		for (Ticket ticket : ticketBL.getTickets())
+			System.out.println(ticket);
+		
 	}
 
 	private void getMyTickets() {
 // Ok, so filter the list of tickets by employeeID, but first obtain the employee ID!
+	//also - I think I want to extract the number of tickets after I bring in the list of tickets
+	//but currently I get the number of tickets first and then process the tickest.
+		//
+
 		int tCounter = 0;
 		System.out.println("Please enter your employeeID:");
 		int myID = InputClass.getInputInt("Please enter a valid employee ID");
-		if (ticketBL.numberOfTickets() > 0) {
+//		if (ticketBL.numberOfTickets() > 0) {
 			for (Ticket ticket : ticketBL.getTickets()) 
-			{
-				if (myID == ticket.getEmployeeId()) 
-				{ // the ticket matches the employee ID
+{	//int test = ticket.sizeOf();
+				if (myID == ticket.getEmployeeId()) { // the ticket matches the employee ID
 					System.out.println(ticket);
 					tCounter++;
 				}
 			}
-		} 
-		if(tCounter ==0) {System.out.println("You currently do not have any tickets!");}
+//		} 
+		if(tCounter == 0) System.out.println("You currently do not have any tickets!");
 	}
 
 	private void manageTickets() {
@@ -184,31 +190,36 @@ public class MainMenu {
 		// so I have to now manage the ticket, but first
 		// verify manager status
 
-		int lastID = ticketBL.numberOfTickets();
+//		int lastID = ticketBL.numberOfTickets();
 		// what if there are no tickets?
-		if (lastID == 0) {
-			System.out.println("There are no tickets to manage.");
-		} else {
+//		if (lastID == 0) {
+//			System.out.println("There are no tickets to manage.");
+//		} else {
 			System.out.println("Which ticket would you like to manage?");
-			int myID = InputClass.getInputInt("Please enter a valid numer ticket number");
+			int ticketID = InputClass.getInputInt("Please enter a valid numer ticket number");
 			// cycle through tickets to find ticket of interest
-			if (myID < lastID && myID > -1) {
+//			if (myID < lastID && myID > -1) {
 				for (Ticket ticket : ticketBL.getTickets()) {
-					if (myID == ticket.getId()) {
+					if (ticketID == ticket.getId()) {
 						System.out.println(ticket);
-						Status mgrStatus = adjustTicket(myID);
-						ticketBL.updateTicket(myID, mgrStatus);
+						Status mgrStatus = adjustTicket();
+						LocalDate statusTimeStamp = LocalDate.now();
+						//hmmm, perhaps set a few fields, then send over id#?
+						//
+						//need to update this method so I send a whole ticket w/ some fields updated
+						//or just send the changed fields?
+						ticketBL.updateTicket(ticket);
 					}
 				}
-			} else {// if ticket does not exist, prompt for ticket in proper range
-				System.out.println("That ticket number does not exist;");
-				System.out.println("enter a number from 0 to " + (lastID - 1));
-				manageTickets();
-			}
-		}
+//			} else {// if ticket does not exist, prompt for ticket in proper range
+//				System.out.println("That ticket number does not exist;");
+//				System.out.println("enter a number from 0 to " + (lastID - 1));
+//				manageTickets();
+//			}
+//		}
 	}
 
-	private Status adjustTicket(int myID) {
+	private Status adjustTicket() {
 		// Here the mgr can approve the ticket or not
 		// Should there be a "comment" field?
 		Status theStatus = Status.PENDING;

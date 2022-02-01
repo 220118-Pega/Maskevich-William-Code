@@ -1,9 +1,11 @@
 package com.revature.projectreimbursement.bl;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import com.revature.projectreimbursement.models.Ticket;
-import com.revature.projectreimbursement.ui.MainMenu.Status;
+import com.revature.projectreimbursement.ui.InputClass.Status;
+
 
 public interface ITicketBL {
 	//Need this interface to allow interaction between layers, specifically
@@ -16,8 +18,10 @@ public interface ITicketBL {
 	//I have to be able to get the list of tickets
 	List<Ticket> getTickets();
 	
+	Ticket getMyTicket(Integer id);
+	
 	int numberOfTickets();
 	
-	void updateTicket(int idToUpdate, Status newStatus);
+	void updateTicket(Ticket ticket);
 
 }

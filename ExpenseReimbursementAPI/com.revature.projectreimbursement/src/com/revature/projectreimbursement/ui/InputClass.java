@@ -4,6 +4,17 @@ import java.util.Scanner;
 
 public class InputClass {
 	
+	public static enum Status {
+		PENDING, APPROVED, REJECTED;
+	}
+	
+
+
+	public static enum Type {
+		LODGING, TRAVEL, FOOD, OTHER;
+	}
+
+	
 	public static final int getInputInt(String myString) {
 		boolean loopCounter = true;
 		Scanner aNum = new Scanner(System.in);

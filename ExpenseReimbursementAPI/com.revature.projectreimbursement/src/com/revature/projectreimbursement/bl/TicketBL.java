@@ -1,10 +1,12 @@
 package com.revature.projectreimbursement.bl;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import com.revature.projectreimbursement.dl.IRepository;
 import com.revature.projectreimbursement.models.Ticket;
-import com.revature.projectreimbursement.ui.MainMenu.Status;
+import com.revature.projectreimbursement.ui.InputClass.Status;
+
 
 public class TicketBL implements ITicketBL {
 //Another class, so this is a noun and it is a blueprint for what???For the list of tickets!!!
@@ -32,10 +34,10 @@ public class TicketBL implements ITicketBL {
 	}
 
 	@Override
-	public void updateTicket(int idToUpdate, Status newStatus) {
+	public void updateTicket(Ticket ticket) {
 		// Ok, to update a ticket I need to know the ticket ID 
 		// and I need to know what values changed.
-		repo.updateTicket(idToUpdate, newStatus);
+		repo.updateTicket(ticket);
 
 	}
 
@@ -51,6 +53,12 @@ public class TicketBL implements ITicketBL {
 		int howMany = repo.sizeOfTicketList();
 
 		return howMany;
+	}
+
+	@Override
+	public Ticket getMyTicket(Integer ticket_id) {
+		// TODO Auto-generated method stub
+		return repo.findById(ticket_id);
 	}
 
 

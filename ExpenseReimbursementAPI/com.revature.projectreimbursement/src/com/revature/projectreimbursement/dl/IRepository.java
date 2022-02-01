@@ -1,13 +1,16 @@
 package com.revature.projectreimbursement.dl;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import com.revature.projectreimbursement.models.Ticket;
-import com.revature.projectreimbursement.ui.MainMenu.Status;
+import com.revature.projectreimbursement.ui.InputClass.Status;
+
 
 public interface IRepository {
 	//Here I define the methods necessary for interaction of of DL w/ the BL
 	
+	Ticket findById(Integer id);
 	//Ill need a method to add a ticket to the list of tickets
 	public void addTicket(Ticket ticket);
 	
@@ -18,6 +21,6 @@ public interface IRepository {
 	//want to now number of tickets in my list
 	int sizeOfTicketList();
 	
-	void updateTicket(int idToUpdate, Status newStatus);
+	void updateTicket(Ticket ticket);
 
 }

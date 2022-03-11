@@ -9,5 +9,3 @@ Throughout my career I worked on and helped resolve various power system related
 
 Although I used to prefer fishing and camping and even fantasy football, I've taken a track of catching up on newer Star Trek productions and exploring the city I live in.  Covid 19 put a damper on one of those things but I'm optimistic about the future.
 
-
-
